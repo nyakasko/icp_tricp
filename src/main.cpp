@@ -298,9 +298,9 @@ void tricp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
         Mat cvNewSource = Mat::zeros(NPo, 3, CV_64F);
         Mat cvNewTarget = Mat::zeros(NPo, 3, CV_64F);
         for (int i = 0; i < NPo; i++) {
-            cvNewSource.at<double>(i, 0) = cvTarget.at<double>(get<0>(pairedIndicesAndDistances[i]), 0);
-            cvNewSource.at<double>(i, 1) = cvTarget.at<double>(get<0>(pairedIndicesAndDistances[i]), 1);
-            cvNewSource.at<double>(i, 2) = cvTarget.at<double>(get<0>(pairedIndicesAndDistances[i]), 2);
+            cvNewSource.at<double>(i, 0) = cvSource.at<double>(get<0>(pairedIndicesAndDistances[i]), 0);
+            cvNewSource.at<double>(i, 1) = cvSource.at<double>(get<0>(pairedIndicesAndDistances[i]), 1);
+            cvNewSource.at<double>(i, 2) = cvSource.at<double>(get<0>(pairedIndicesAndDistances[i]), 2);
             cvNewTarget.at<double>(i, 0) = cvTarget.at<double>(get<1>(pairedIndicesAndDistances[i]), 0);
             cvNewTarget.at<double>(i, 1) = cvTarget.at<double>(get<1>(pairedIndicesAndDistances[i]), 1);
             cvNewTarget.at<double>(i, 2) = cvTarget.at<double>(get<1>(pairedIndicesAndDistances[i]), 2);
