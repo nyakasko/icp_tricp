@@ -6,13 +6,10 @@ Initial, 10° rotation around the z axis to displace one of the LionScan pointcl
 
 ![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/LionScan_rotated.PNG?raw=true)
 
-After using ICP to register the 2 LionScan pointclouds. (10°)
 
-![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_LionScan_rotated.PNG?raw=true)
-
-After using TrICP to register the 2 LionScan pointclouds. (10°)
-
-![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_LionScan_rotated.PNG?raw=true)
+After using ICP to register the 2 LionScan pointclouds. (10°)            | After using TrICP to register the 2 LionScan pointclouds. (10°)
+:-------------------------:|:-------------------------:
+![]((https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_LionScan_rotated.PNG?raw=true)  |  ![](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_LionScan_rotated.PNG?raw=true)
 
 Initial, 20° rotation around the z axis to displace one of the LionScan pointclouds.
 
