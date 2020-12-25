@@ -12,7 +12,7 @@ Translation matrix:
  -0.07505451031637556]
 
 print(math.degrees(math.acos((np.trace(Rmodel.transpose()*r0)-1)/2)))
-angular rotation error: 10.004743176473797 degrees
+angular rotation difference: 10.004743176473797 degrees
 translation MSE: 0.006538385757928085
 
 tricp
@@ -28,7 +28,7 @@ Translation matrix:
  0.005488797641925558;
  -0.03887292957090716]
 
-angular rotation error: 10.00113297679952 degrees
+angular rotation difference: 10.00113297679952 degrees
 translation MSE: 0.0005138325202816723
 
 Model data

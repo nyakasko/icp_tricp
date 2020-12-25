@@ -305,7 +305,7 @@ void tricp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
 
         sort(pairedIndicesAndDistances.begin(), pairedIndicesAndDistances.end(), sortbythird);
         sort(dists_.begin(), dists_.end());
-        int NPo = 0.5 * double(pairedIndicesAndDistances.size());
+        int NPo = 0.6 * double(pairedIndicesAndDistances.size());
         Mat cvNewSource = Mat::zeros(NPo, 3, CV_64F);
         Mat cvNewTarget = Mat::zeros(NPo, 3, CV_64F);
         for (int i = 0; i < NPo; i++) {
@@ -374,12 +374,12 @@ int main(int argc, char **argv) {
   int max_iteration_num = atoi(argv[3]);
 
   // Iterative Closest Point Algorithm
-  icp(mat1, mat2, max_iteration_num);
+  //icp(mat1, mat2, max_iteration_num);
 
   // Trimmed Iterative Closest Point Algorithm
-  // tricp(mat1, mat2, max_iteration_num); // mat1 is data, mat2 is the model
+  tricp(mat1, mat2, max_iteration_num); // mat1 is data, mat2 is the model
 
-  //vector<double> degrees = { 0, 0, 10* PI / 180.0 };
+  //vector<double> degrees = { 0, 0, 20 * PI / 180.0 };
   //Matrix3d initialRotation = eulerAnglesToRotationMatrix(degrees);
   //cout << initialRotation;
   //#pragma omp parallel for
@@ -387,7 +387,7 @@ int main(int argc, char **argv) {
   //    mat1.block<1, 3>(i, 0).transpose() << initialRotation * mat1.block<1, 3>(i, 0).transpose();
   //}
 
-  //ofstream file("D:/source/repos/3dsens_icp/LionScan1_rotated_10.xyz");
+  //ofstream file("D:/source/repos/3dsens_icp/LionScan1_rotated_20.xyz");
   //if (file.is_open())
   //{
   //    file << mat1 << '\n';

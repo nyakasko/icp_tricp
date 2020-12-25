@@ -12,7 +12,7 @@ Translation matrix:
  -0.000727316232604025;
  0.0004317108025517769
 
-angular rotation error: 9.999921165181412 degrees
+angular rotation difference: 9.999921165181412 degrees
 translation MSE: 0.006538385757928085
 
 tricp
@@ -28,7 +28,7 @@ Translation matrix:
  0.0007987245079021932;
  0.002564447785470492]
 
-angular rotation error: 9.999922591006124 degrees
+angular rotation difference: 9.999922591006124 degrees
 translation MSE: 0.0005138325202816723
 
 
