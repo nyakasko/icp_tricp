@@ -18,3 +18,16 @@ After using TrICP to register the 2 LionScan pointclouds.
 | :---         | :---         |     :---:      |          ---: |          ---: |
 | ICP         |  9.999921165181412°   | 0.006538385757928085    | 5.14622    |       33.2789 s        |
 | TrICP         |  9.999922591006124°     | 0.0005138325202816723       | 2.24015      |          10.1002 s     |
+
+
+Initial, 10° rotation around the z axis to displace one of the fountain pointclouds.
+
+![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/fountain_rotated.PNG?raw=true)
+
+After using ICP to register the 2 fountain pointclouds.
+
+![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_fountain_rotated.PNG?raw=true)
+
+After using TrICP to register the 2 LionScan pointclouds.
+
+![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_fountain_rotated.PNG?raw=true)
