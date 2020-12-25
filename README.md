@@ -21,30 +21,17 @@ After using ICP to register the 2 LionScan pointclouds. (20°)            | Afte
 | ICP (20°)         |  19.99993772618883°   | 0.0000003388619386119256    | 5.14622   |       34.7251 s        |
 | TrICP (20°)       |  19.999940241038647°     | 0.000001488607811792912       | 4.55636      |          13.7501 s     |
 
+Initial, 10° rotation around the z axis to displace one of the fountain pointclouds.           | Initial, 20° rotation around the z axis to displace one of the fountain pointclouds.
+:-------------------------:|:-------------------------:
+![](https://github.com/nyakasko/3dsens_icp/blob/main/images/fountain_rotated.PNG?raw=true)  |  ![](https://github.com/nyakasko/3dsens_icp/blob/main/images/fountain_rotated_20.PNG?raw=true)
 
-Initial, 10° rotation around the z axis to displace one of the fountain pointclouds.
+After using ICP to register the 2 fountain pointclouds. (10°)          | After using TrICP to register the 2 fountain pointclouds. (10°)
+:-------------------------:|:-------------------------:
+![](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_fountain_rotated.PNG?raw=true) |  ![](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_fountain_rotated.PNG?raw=true)
 
-![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/fountain_rotated.PNG?raw=true)
-
-After using ICP to register the 2 fountain pointclouds. (10°)
-
-![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_fountain_rotated.PNG?raw=true)
-
-After using TrICP to register the 2 LionScan pointclouds. (10°)
-
-![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_fountain_rotated.PNG?raw=true)
-
-Initial, 20° rotation around the z axis to displace one of the fountain pointclouds.
-
-![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/fountain_rotated_20.PNG?raw=true)
-
-After using ICP to register the 2 fountain pointclouds. (20°)
-
-![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_fountain_rotated_20.PNG?raw=true)
-
-After using TrICP to register the 2 LionScan pointclouds. (20°)
-
-![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_fountain_rotated_20.PNG?raw=true)
+After using ICP to register the 2 fountain pointclouds. (20°)          | After using TrICP to register the 2 fountain pointclouds. (20°)
+:-------------------------:|:-------------------------:
+![](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_fountain_rotated_20.PNG?raw=true) |  ![](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_fountain_rotated_20.PNG?raw=true)
 
 |Name | Angular rotation error | Translation MSE | MSE | Runtime |
 | :---         | :---         |     :---:      |          ---: |          ---: |
