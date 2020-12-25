@@ -5,3 +5,12 @@ Implementation of Iterative Closest Point and Trimmed Iterative Closest Point al
 Initial, 10° rotation around the z axis to displace one of the LionScan pointclouds.
 
 ![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/LionScan_rotated.PNG?raw=true)
+
+After using ICP to register the 2 LionScan pointclouds.
+
+![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_LionScan_rotated.PNG?raw=true)
+
+|Name | Angular rotation error | Translation MSE | MSE | Runtime |
+| :---         | :---         |     :---:      |          ---: |          ---: |
+| ICP         |  9.999921165181412°   | 0.006538385757928085    | 5.14622    |       33.2789 s        |
+| TrICP         |  9.999922591006124°     | 0.0005138325202816723       | 2.24015      |          10.1002 s     |
