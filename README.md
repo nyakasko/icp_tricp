@@ -45,4 +45,4 @@ Angular rotation error = arccos((Tr(R) - 1) / 2)
 | TrICP     (20°)     | 0.00000880672°     | 0.00012271255912062388      | 0.0238604     |         13.1965 s     |
 
 TrICP is more robust to rotations and to incomplete, noisy data. 
-TrICP runs fast than ICP and results in a lower MSE and Translation MSE values.
+TrICP runs faster than ICP and results in lower MSE values.
