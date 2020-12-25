@@ -10,6 +10,10 @@ After using ICP to register the 2 LionScan pointclouds.
 
 ![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_LionScan_rotated.PNG?raw=true)
 
+After using TrICP to register the 2 LionScan pointclouds.
+
+![alt text](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_LionScan_rotated.PNG?raw=true)
+
 |Name | Angular rotation error | Translation MSE | MSE | Runtime |
 | :---         | :---         |     :---:      |          ---: |          ---: |
 | ICP         |  9.999921165181412°   | 0.006538385757928085    | 5.14622    |       33.2789 s        |
