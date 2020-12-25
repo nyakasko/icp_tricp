@@ -168,32 +168,32 @@ bool sortbythird(const tuple<int, int, double>& a, const tuple<int, int, double>
     return (get<2>(a) < get<2>(b));
 }
 
-//Matrix3d eulerAnglesToRotationMatrix(vector<double>& theta)
-//{
-//    Matrix3d R_x = Matrix3d::Identity(3, 3);
-//    // Calculate rotation about x axis
-//    R_x <<
-//        1, 0, 0,
-//        0, cos(theta[0]), -sin(theta[0]),
-//        0, sin(theta[0]), cos(theta[0]);
-//
-//    // Calculate rotation about y axis
-//    Matrix3d R_y = Matrix3d::Identity(3, 3);
-//    R_y <<
-//        cos(theta[1]), 0, sin(theta[1]),
-//        0, 1, 0,
-//        -sin(theta[1]), 0, cos(theta[1]);
-//
-//    // Calculate rotation about z axis
-//    Matrix3d R_z = Matrix3d::Identity(3, 3);
-//    R_z <<
-//        cos(theta[2]), -sin(theta[2]), 0,
-//        sin(theta[2]), cos(theta[2]), 0,
-//        0, 0, 1;
-//
-//    // Combined rotation matrix
-//    return R_z * R_y * R_x;
-//}
+Matrix3d eulerAnglesToRotationMatrix(vector<double>& theta)
+{
+    Matrix3d R_x = Matrix3d::Identity(3, 3);
+    // Calculate rotation about x axis
+    R_x <<
+        1, 0, 0,
+        0, cos(theta[0]), -sin(theta[0]),
+        0, sin(theta[0]), cos(theta[0]);
+
+    // Calculate rotation about y axis
+    Matrix3d R_y = Matrix3d::Identity(3, 3);
+    R_y <<
+        cos(theta[1]), 0, sin(theta[1]),
+        0, 1, 0,
+        -sin(theta[1]), 0, cos(theta[1]);
+
+    // Calculate rotation about z axis
+    Matrix3d R_z = Matrix3d::Identity(3, 3);
+    R_z <<
+        cos(theta[2]), -sin(theta[2]), 0,
+        sin(theta[2]), cos(theta[2]), 0,
+        0, 0, 1;
+
+    // Combined rotation matrix
+    return R_z * R_y * R_x;
+}
 
 double calculateError(Mat mat1, Mat mat2, Mat rot, Mat transl) {
     double error = 0;
@@ -211,6 +211,16 @@ double calculateError(Mat mat1, Mat mat2, Mat rot, Mat transl) {
     }
     error = error / mat2.rows;
     return error;
+}
+
+double calculateTrimmedError (int NPo, vector<tuple<int, int, double>> pairedIndicesAndDistances) {
+    double trimmedMSE = 0.;
+    int length = NPo;
+    for (int i = 0; i < length; i++) {
+        trimmedMSE += get<2>(pairedIndicesAndDistances[i]);
+    }
+    trimmedMSE /= length;
+    return trimmedMSE;
 }
 
 void icp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
@@ -258,6 +268,8 @@ void icp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
     auto time_finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = (time_finish - time_start);
     cout << "Time = " << duration.count() << " s" << endl;
+    cout << "Rotation matrix: " << endl << T.rot << endl;
+    cout << "Translation matrix: " << endl << T.transl << endl;
     ofstream file("D:/source/repos/3dsens_icp/test.xyz");
     if (file.is_open())
     {
@@ -278,12 +290,11 @@ void tricp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
     eigen2cv(mat2, cvTarget);
     double prev_error = 0.0;
     double mean_error = 0.0;
-    double tolerance = 0.00001;
+    double tolerance = 0.0001;
     int max_iters_ = max_iteration_num;//100;
     my_kd_tree_t mat_index(3, std::cref(mat2), 10 /* max leaf */);
     mat_index.index->buildIndex();
 
-    int NPo = 1000;
     for (int iters_ = 0; iters_ < max_iters_; iters_++) {
         pairedIndicesAndDistances.clear();
         findNearestNeighbours(cvSource, mat_index, cvSource.rows, 3); 
@@ -294,7 +305,7 @@ void tricp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
 
         sort(pairedIndicesAndDistances.begin(), pairedIndicesAndDistances.end(), sortbythird);
         sort(dists_.begin(), dists_.end());
-
+        int NPo = 0.5 * double(pairedIndicesAndDistances.size());
         Mat cvNewSource = Mat::zeros(NPo, 3, CV_64F);
         Mat cvNewTarget = Mat::zeros(NPo, 3, CV_64F);
         for (int i = 0; i < NPo; i++) {
@@ -319,8 +330,9 @@ void tricp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
             cvSource.at<double>(i, 1) = pont.at<double>(1, 0);
             cvSource.at<double>(i, 2) = pont.at<double>(2, 0);
         }
-        mean_error = calculateError(cvSource, cvNewTarget, T.rot, T.transl); // Updating MSE
-        cout << mean_error << endl;
+        // mean_error = calculateError(cvSource, cvNewTarget, T.rot, T.transl); // Updating MSE
+        mean_error = calculateTrimmedError(NPo, pairedIndicesAndDistances); // Updating MSE
+        cout << "MSE: " << mean_error << endl;
 
         if (abs(prev_error - mean_error) < tolerance) {
             break;
@@ -330,6 +342,8 @@ void tricp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
     auto time_finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = (time_finish - time_start);
     cout << "Time = " << duration.count() << " s" << endl;
+    cout << "Rotation matrix: " << endl << T.rot << endl;
+    cout << "Translation matrix: " << endl << T.transl << endl;
     ofstream file("D:/source/repos/3dsens_icp/test_trimmed.xyz");
     if (file.is_open())
     {
@@ -350,9 +364,9 @@ int main(int argc, char **argv) {
       return 1;
   }
   MatrixReaderWriter* mrw1;
-  mrw1 = new MatrixReaderWriter(argv[1]); //"D:/source/repos/icp_trcip/sphere1.xyz");
+  mrw1 = new MatrixReaderWriter(argv[1]);
   MatrixReaderWriter* mrw2;
-  mrw2 = new MatrixReaderWriter(argv[2]); //"D:/source/repos/icp_trcip/sphere2.xyz");
+  mrw2 = new MatrixReaderWriter(argv[2]);
   MatrixXd mat1(mrw1->rowNum, mrw1->columnNum);
   MatrixXd mat2(mrw2->rowNum, mrw2->columnNum);
   loadPointCloud(mat1, mat2, *mrw1, *mrw2);
@@ -360,10 +374,24 @@ int main(int argc, char **argv) {
   int max_iteration_num = atoi(argv[3]);
 
   // Iterative Closest Point Algorithm
-  // icp(mat1, mat2, max_iteration_num);
+  icp(mat1, mat2, max_iteration_num);
 
   // Trimmed Iterative Closest Point Algorithm
-  tricp(mat1, mat2, max_iteration_num); // mat1 is data, mat2 is the model
+  // tricp(mat1, mat2, max_iteration_num); // mat1 is data, mat2 is the model
+
+  //vector<double> degrees = { 0, 0, 10* PI / 180.0 };
+  //Matrix3d initialRotation = eulerAnglesToRotationMatrix(degrees);
+  //cout << initialRotation;
+  //#pragma omp parallel for
+  //for (int i = 0; i < mat1.rows(); i++) {      
+  //    mat1.block<1, 3>(i, 0).transpose() << initialRotation * mat1.block<1, 3>(i, 0).transpose();
+  //}
+
+  //ofstream file("D:/source/repos/3dsens_icp/LionScan1_rotated_10.xyz");
+  //if (file.is_open())
+  //{
+  //    file << mat1 << '\n';
+  //}
 
   return 0;
 }
