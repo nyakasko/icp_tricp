@@ -21,7 +21,7 @@ Angular rotation error = arccos((Tr(R'*Rgroundtruth) - 1) / 2)
 | ICP (10°)         |  9.99992116519°   | 0.006538385757928085    | 5.14622    |       33.2789 s        |
 | TrICP (10°)       |  9.99992259101°     | 0.0005138325202816723       | 2.24015      |          10.1002 s     |
 | ICP (20°)         |  19.9999377262°   | 0.0000003388619386119256    | 5.14622   |       34.7251 s        |
-| TrICP (20°)       |  19.999940241°     | 0.000001488607811792912       | 4.55636      |          13.7501 s     |
+| TrICP (20°)       |  18.911658794566836°     | 5.331268631078188       | 4.55636      |          13.7501 s     |
 
 Initial, 10° rotation around the z axis to displace one of the fountain pointclouds.           | Initial, 20° rotation around the z axis to displace one of the fountain pointclouds.
 :-------------------------:|:-------------------------:
