@@ -235,7 +235,8 @@ void icp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
     int max_iters_ = max_iteration_num;//100;
     my_kd_tree_t mat_index(3, std::cref(mat2), 10 /* max leaf */);
     mat_index.index->buildIndex();
-
+    Mat rotation_matrix = Mat::eye(3, 3, CV_64F);
+    Mat translation_matrix = Mat::eye(3, 1, CV_64F);
     for (int iters_ = 0; iters_ < max_iters_; iters_++) {
         findNearestNeighbours(cvSource, mat_index, cvSource.rows, 3);
         Mat cvNewTarget = Mat::zeros(cvSource.rows, 3, CV_64F);
@@ -245,7 +246,8 @@ void icp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
             cvNewTarget.at<double>(i, 2) = cvTarget.at<double>(indices_[i], 2);
         }
         T = best_fit_transform(cvSource, cvNewTarget); // Compute motion that minimises mean square error(MSE) between paired points.
-
+        rotation_matrix *= T.rot;
+        translation_matrix += T.transl;
         for (int i = 0; i < cvSource.rows; i++) {     // Apply motion to P and update MSE.
             Mat pont = Mat::zeros(3, 1, CV_64F);
             pont.at<double>(0, 0) = cvSource.at<double>(i, 0);
@@ -268,8 +270,8 @@ void icp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
     auto time_finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = (time_finish - time_start);
     cout << "Time = " << duration.count() << " s" << endl;
-    cout << "Rotation matrix: " << endl << T.rot << endl;
-    cout << "Translation matrix: " << endl << T.transl << endl;
+    cout << "Rotation matrix: " << endl << rotation_matrix << endl;
+    cout << "Translation matrix: " << endl << translation_matrix << endl;
     ofstream file("D:/source/repos/3dsens_icp/test.xyz");
     if (file.is_open())
     {
@@ -293,6 +295,8 @@ void tricp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
     double tolerance = 0.0001;
     int max_iters_ = max_iteration_num;//100;
     my_kd_tree_t mat_index(3, std::cref(mat2), 10 /* max leaf */);
+    Mat rotation_matrix = Mat::eye(3, 3, CV_64F);
+    Mat translation_matrix = Mat::eye(3, 1, CV_64F);
     mat_index.index->buildIndex();
 
     for (int iters_ = 0; iters_ < max_iters_; iters_++) {
@@ -318,7 +322,8 @@ void tricp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
         }
 
         T = best_fit_transform(cvNewSource, cvNewTarget); // For !!!! Npo selected pairs !!!!, compute optimal motion(R, t) that minimises STS
-
+        rotation_matrix *= T.rot;
+        translation_matrix += T.transl;
         for (int i = 0; i < cvSource.rows; i++) {     // Apply motion to P and update MSE.
             Mat pont = Mat::zeros(3, 1, CV_64F);
             pont.at<double>(0, 0) = cvSource.at<double>(i, 0);
@@ -342,8 +347,8 @@ void tricp(MatrixXd mat1, MatrixXd mat2, int max_iteration_num) {
     auto time_finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = (time_finish - time_start);
     cout << "Time = " << duration.count() << " s" << endl;
-    cout << "Rotation matrix: " << endl << T.rot << endl;
-    cout << "Translation matrix: " << endl << T.transl << endl;
+    cout << "Rotation matrix: " << endl << rotation_matrix << endl;
+    cout << "Translation matrix: " << endl << translation_matrix << endl;
     ofstream file("D:/source/repos/3dsens_icp/test_trimmed.xyz");
     if (file.is_open())
     {
@@ -374,7 +379,7 @@ int main(int argc, char **argv) {
   int max_iteration_num = atoi(argv[3]);
 
   // Iterative Closest Point Algorithm
-  //icp(mat1, mat2, max_iteration_num);
+  icp(mat1, mat2, max_iteration_num);
 
   // Trimmed Iterative Closest Point Algorithm
   tricp(mat1, mat2, max_iteration_num); // mat1 is data, mat2 is the model
