@@ -14,7 +14,7 @@ After using ICP to register the 2 LionScan pointclouds. (20°)            | Afte
 :-------------------------:|:-------------------------:
 ![](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_LionScan_rotated_20.PNG?raw=true)  |  ![](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_LionScan_rotated_20.PNG?raw=true)
 
-Angular rotation error = arccos((Tr(R) - 1) / 2)
+Angular rotation error = arccos((Tr(R'*Rgroundtruth) - 1) / 2)
 
 |Name | Angular rotation error | Translation MSE | MSE | Runtime |
 | :---         | :---         |     :---:      |          ---: |          ---: |
@@ -35,7 +35,7 @@ After using ICP to register the 2 fountain pointclouds. (20°)          | After 
 :-------------------------:|:-------------------------:
 ![](https://github.com/nyakasko/3dsens_icp/blob/main/images/icp_registered_fountain_rotated_20.PNG?raw=true) |  ![](https://github.com/nyakasko/3dsens_icp/blob/main/images/tricp_registered_fountain_rotated_20.PNG?raw=true)
 
-Angular rotation error = arccos((Tr(R) - 1) / 2)
+Angular rotation error = arccos((Tr(R'*Rgroundtruth) - 1) / 2)
 
 |Name | Angular rotation error | Translation MSE | MSE | Runtime |
 | :---         | :---         |     :---:      |          ---: |          ---: |
